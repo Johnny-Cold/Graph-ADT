@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Graph_ADT
+namespace Graph_ADT.map
 {
     public abstract class HashMap<K,V> 
     {

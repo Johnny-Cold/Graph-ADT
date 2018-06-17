@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
 
-namespace Graph_ADT
+namespace Graph_ADT.map
 {
     /// <summary>
     /// Implementation of a hash map that implements separate chaining.
@@ -13,7 +13,7 @@ namespace Graph_ADT
     public class SeparateChainingHashMap<K, V> : HashMap<K, V>
     {
         private List<KeyValuePair<K, V>>[] table;
-        private float loadFactor = 10.0f;S
+        private float loadFactor = 10.0f;
         private int minimumSize = 1024;
 
         public SeparateChainingHashMap() : base()
