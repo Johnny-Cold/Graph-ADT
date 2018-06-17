@@ -34,6 +34,15 @@ namespace Graph_ADT
             Console.WriteLine("Out-degree of Aquemini: " + graph.getOutDegree(vertices[0]));
             Console.WriteLine("\n");
 
+            //graph.removeVertex(vertices[3]);
+            //Console.WriteLine("Number of vertices: " + graph.numVertices());
+            //Console.WriteLine("Number of edges: " + graph.numEdges());
+            //Console.WriteLine("Degree of Aquemini: " + graph.getDegree(vertices[0]));
+            //Console.WriteLine("In-degree of Aquemini: " + graph.getInDegree(vertices[0]));
+            //Console.WriteLine("Out-degree of Aquemini: " + graph.getOutDegree(vertices[0]));
+            //Console.WriteLine("\n");
+
+            Console.WriteLine("Removing edge " + new DirectedEdge<Vertex<string>>(vertices[0], vertices[2]).ToString());
             graph.removeEdge(new DirectedEdge<Vertex<string>>(vertices[0], vertices[2]));
             Console.WriteLine("Number of vertices: " + graph.numVertices());
             Console.WriteLine("Number of edges: " + graph.numEdges());
@@ -41,7 +50,8 @@ namespace Graph_ADT
             Console.WriteLine("In-degree of Aquemini: " + graph.getInDegree(vertices[0]));
             Console.WriteLine("Out-degree of Aquemini: " + graph.getOutDegree(vertices[0]));
             Console.WriteLine("\n");
-            
+
+            Console.WriteLine("Clearing graph");
             graph.clear();
             Console.WriteLine("Number of vertices: " + graph.numVertices());
             Console.WriteLine("Number of edges: " + graph.numEdges());

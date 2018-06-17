@@ -118,10 +118,19 @@ namespace Graph_ADT.graph
         }
 
         /// <summary>
-        /// Removes an edge as well as its endpoint vertices.
+        /// Removes an edge.
         /// </summary>
         /// <param name="edge"> The edge to remove from the graph. </param>
         public virtual void removeEdge(Edge<V> edge)
+        {
+             edges.Remove(edge);
+        }
+
+        /// <summary>
+        /// Removes an edge as well as its endpoint vertices.
+        /// </summary>
+        /// <param name="edge"> The edge to remove from the graph. </param>
+        public virtual void removeEdgeAndEndpoints(Edge<V> edge)
         {
             V[] endpoints = edge.getEndpoints();
             
@@ -169,7 +178,7 @@ namespace Graph_ADT.graph
             return edge.getEndpoints(); 
         }
         
-        public void removeVertex(V vertex)
+        public virtual void removeVertex(V vertex)
         {
             vertices.Remove(vertex);
         

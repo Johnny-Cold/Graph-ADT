@@ -69,10 +69,29 @@ namespace Graph_ADT.graph
             adjacencyList[indices[1]].Add(vertices[indices[0]]);
         }
 
+        /// <summary>
+        /// Removes the specified edge from the graph.
+        /// Removes all occurrences of the edge in the adjacency lists.
+        /// </summary>
+        /// <param name="edge"> The edge to remove. </param>
         public override void removeEdge(Edge<V> edge)
         {
             adjacencyList.RemoveAll(e => e.Equals(edge));
             base.removeEdge(edge);
+        }
+
+        public override void removeEdgeAndEndpoints(Edge<V> edge)
+        {
+            V[] endpoints = edge.getEndpoints();
+            int i1 = vertices.IndexOf(endpoints[0]);
+            int i2 = vertices.IndexOf(endpoints[1]);
+
+            // Removing corresponding adjacency lists.
+            adjacencyList.RemoveAll(e => e.Equals(edge));
+            adjacencyList.RemoveAt(i1);
+            adjacencyList.RemoveAt(i2);
+            
+            base.removeEdgeAndEndpoints(edge);
         }
 
         public override void addVertex(V vertex)
@@ -91,6 +110,18 @@ namespace Graph_ADT.graph
             {
                 addEdge(new UndirectedEdge<V>(vertex, neighbour));
             }
+        }
+
+        /// <summary>
+        /// Removes a vertex from the list of vertices and from the edges where it is an endpoint.
+        /// Removes the corresponding adjacency list for the vertex to remove.
+        /// </summary>
+        /// <param name="vertex"> The vertex to remove. </param>
+        public override void removeVertex(V vertex)
+        {
+            int indexOfVertex = vertices.IndexOf(vertex);
+            adjacencyList.Remove(adjacencyList[indexOfVertex]);
+            base.removeVertex(vertex);
         }
 
         /// <summary>
