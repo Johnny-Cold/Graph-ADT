@@ -8,6 +8,13 @@ namespace Graph_ADT.graph
 {
     public interface Graph<V,E>
     {
+        /// <returns> A boolean indication that the graph is empty (has no vertices). </returns>
+        bool isEmpty();
+
+        int getNumVertices();
+
+        int getNumEdges();
+
         /// <returns> The degree of the given vertex. </returns>
         int getDegree(V vertex);
 
@@ -23,12 +30,7 @@ namespace Graph_ADT.graph
         
         /// <returns> All the edges for which the specified vertex is an endpoint. </returns>
         List<E> getEdges(V vertex);
-
-        /// <summary>
-        /// Provides visualisation of the edges.
-        /// </summary>
-        void printEdges();
-
+        
         /// <summary>
         /// Removes a specified edge.
         /// </summary>

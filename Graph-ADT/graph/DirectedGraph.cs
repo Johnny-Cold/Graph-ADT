@@ -9,9 +9,14 @@ namespace Graph_ADT.graph
 {
     public class DirectedGraph<V> : Graph<V, DirectedEdge<V>>
     {
-        private List<DirectedEdge<V>> edges = new List<DirectedEdge<V>>();
+        protected List<V> vertices;
+        protected List<DirectedEdge<V>> edges;
 
-        public DirectedGraph() { }
+        public DirectedGraph()
+        {
+            vertices = new List<V>();
+            edges = new List<DirectedEdge<V>>();
+        }
 
         public DirectedGraph(List<V> vertices, List<DirectedEdge<V>> edges)
         {
@@ -19,15 +24,24 @@ namespace Graph_ADT.graph
             this.edges = edges;
         }
 
-        public virtual int numEdges()
+        public bool isEmpty()
+        {
+            return vertices.Count == 0;
+        }
+
+        public int getNumVertices()
+        {
+            return vertices.Count;
+        }
+
+        public int getNumEdges()
         {
             return edges.Count;
         }
 
-        /// <returns> The outgoing degree of the given vertex. </returns>
-        public int getOutDegree(V vertex)
+        public int getDegree(V vertex)
         {
-            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
+            return edges.Where(e => e.hasVertex(vertex)).Count();
         }
 
         /// <returns> The incoming degree of the given vertex. </returns>
@@ -36,11 +50,13 @@ namespace Graph_ADT.graph
             return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
         }
 
-        /// <summary>
-        /// Adds a new edge to the graph.
-        /// </summary>
-        /// <param name="edge"> The new edge  to add. </param>
-        public override void addEdge(DirectedEdge<V> edge)
+        /// <returns> The outgoing degree of the given vertex. </returns>
+        public int getOutDegree(V vertex)
+        {
+            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
+        }
+        
+        public void addEdge(DirectedEdge<V> edge)
         {
             edges.Add(edge);
             V[] endpoints = edge.getEndpoints();
@@ -55,46 +71,43 @@ namespace Graph_ADT.graph
             }
         }
 
-        /// <summary>
-        /// Adds a new edge to the graph.
-        /// Edge addition is implied by the specification of a neighbouring edge.
-        /// </summary>
-        /// <param name="vertex"> A vertex to add. </param>
-        /// <param name="neighbour"> An opposite vertex to add. </param>
-        public override void addVertex(V vertex, V neighbour)
+        public void addEdge(V vertex, V neighbour)
+        {
+            addEdge(new DirectedEdge<V>(vertex, neighbour));
+        }
+        
+        public void addVertex(V vertex, V neighbour)
         {
             addEdge(new DirectedEdge<V>(vertex, neighbour));
         }
 
-        /// <returns> A list of edges for which the given vertex is an endpoint. </returns>
         public List<DirectedEdge<V>> getEdges(V vertex)
         {
-            List<DirectedEdge<V>> v_edges = new List<DirectedEdge<V>>();
-
-            foreach (DirectedEdge<V> edge in edges)
-            {
-                if (edge.hasVertex(vertex))
-                {
-                    v_edges.Add(edge);
-                }
-            }
-
-            return v_edges;
+            return edges.Where(e => e.hasVertex(vertex)).ToList<DirectedEdge<V>>();
         }
 
-        /// <summary>
-        /// Removes an edge.
-        /// </summary>
-        /// <param name="edge"> The edge to remove from the graph. </param>
+        /// <returns> A list of all the edges in which the given vertex is the destiantion. </returns>
+        public List<DirectedEdge<V>> getInEdges(V vertex)
+        {
+            return edges.Where(e => e.getDestination().Equals(vertex)).ToList<DirectedEdge<V>>();
+        }
+
+        /// <returns> A list of all the edges in which the given vertex is the origin. </returns>
+        public List<DirectedEdge<V>> getOutEdges(V vertex)
+        {
+            return edges.Where(e => e.getOrigin().Equals(vertex)).ToList<DirectedEdge<V>>();
+        }
+
         public virtual void removeEdge(DirectedEdge<V> edge)
         {
             edges.Remove(edge);
         }
 
-        /// <summary>
-        /// Removes an edge as well as its endpoint vertices.
-        /// </summary>
-        /// <param name="edge"> The edge to remove from the graph. </param>
+        public void removeEdge(V v, V u)
+        {
+            removeEdge(new DirectedEdge<V>(v, u));
+        }
+
         public virtual void removeEdgeAndEndpoints(DirectedEdge<V> edge)
         {
             V[] endpoints = edge.getEndpoints();
@@ -103,26 +116,11 @@ namespace Graph_ADT.graph
             vertices.Remove(endpoints[1]);
         }
 
-        /// <summary>
-        /// Adds a new vertex to the graph, but to no specific edge.
-        /// </summary>
-        /// <param name="vertex"> The new vertex to add. </param>
         public virtual void addVertex(V vertex)
         {
             vertices.Add(vertex);
         }
-
-        protected V getVertex(V vertex)
-        {
-            return vertices.Where(v => v.Equals(vertex)).SingleOrDefault();
-        }
-
-        /// <returns> Gets the vertex opposite a given vertex on a specified edge. </returns>
-        public V getNeighbour(V vertex, DirectedEdge<V> edge)
-        {
-            return edges.Where(e => e.Equals(edge)).SingleOrDefault().getEndpoints().Where(v => !v.Equals(vertex)).SingleOrDefault();
-        }
-
+        
         public V[] getEdgeEndpoints(DirectedEdge<V> edge)
         {
             return edge.getEndpoints();
@@ -152,30 +150,10 @@ namespace Graph_ADT.graph
             }
         }
         
-        public override void clear()
+        public void clear()
         {
             vertices.Clear();
             edges.Clear();
-        }
-
-        public int getDegree(V vertex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void addEdge(V vertex, V neighbour)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void printEdges()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void removeEdge(V v, V u)
-        {
-            throw new NotImplementedException();
         }
     }
 }
