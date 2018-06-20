@@ -11,10 +11,10 @@ namespace Graph_ADT.graph
     /// Implementation of an undirected graph.
     /// </summary>
     /// <typeparam name="V"> Type name for vertices. </typeparam>
-    public class UndirectedGraph<V>
+    public class UndirectedGraph<V> : Graph<V, UndirectedEdge<V>>
     {
         protected List<V> vertices = new List<V>();
-        private List<UndirectedEdge<V>> edges = new List<UndirectedEdge<V>>();
+        protected List<UndirectedEdge<V>> edges = new List<UndirectedEdge<V>>();
 
         /// <summary>
         /// Class constructor.
@@ -175,6 +175,21 @@ namespace Graph_ADT.graph
         {
             vertices.Clear();
             edges.Clear();
+        }
+
+        public void addEdge(V vertex, V neighbour)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void printEdges()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void removeEdge(V v, V u)
+        {
+            throw new NotImplementedException();
         }
     }
 }

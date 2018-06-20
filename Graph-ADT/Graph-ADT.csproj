@@ -46,6 +46,7 @@
     <Compile Include="graph\AdjacencyListGraph.cs" />
     <Compile Include="graph\AdjacencyMapGraph.cs" />
     <Compile Include="graph\DirectedGraph.cs" />
+    <Compile Include="graph\Graph.cs" />
     <Compile Include="mod\ArrayList.cs" />
     <Compile Include="mod\DirectedEdge.cs" />
     <Compile Include="mod\Edge.cs" />

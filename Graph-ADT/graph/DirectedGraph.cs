@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Graph_ADT.graph
 {
-    public class DirectedGraph<V> : UndirectedGraph<V>
+    public class DirectedGraph<V> : Graph<V, DirectedEdge<V>>
     {
         private List<DirectedEdge<V>> edges = new List<DirectedEdge<V>>();
 
@@ -156,6 +156,26 @@ namespace Graph_ADT.graph
         {
             vertices.Clear();
             edges.Clear();
+        }
+
+        public int getDegree(V vertex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void addEdge(V vertex, V neighbour)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void printEdges()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void removeEdge(V v, V u)
+        {
+            throw new NotImplementedException();
         }
     }
 }
