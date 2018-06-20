@@ -11,7 +11,7 @@ namespace Graph_ADT.graph
     /// Implementation of a graph using adjacency lists.
     /// </summary>
     /// <typeparam name="V"> Type name for vertices. </typeparam>
-    public class AdjacencyListGraph<V> : Graph<V>
+    public class AdjacencyListGraph<V> : UndirectedGraph<V>
     {
         private List<List<V>> adjacencyList = new List<List<V>>();
 

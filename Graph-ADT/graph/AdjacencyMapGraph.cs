@@ -11,7 +11,7 @@ namespace Graph_ADT.graph
     /// <summary>
     /// Implementation of a graph using an adjacency map.
     /// </summary>
-    public class AdjacencyMapGraph<V> : Graph<V>
+    public class AdjacencyMapGraph<V> : UndirectedGraph<V>
     {
         private SeparateChainingHashMap<V, Edge<V>> hashMap;
         

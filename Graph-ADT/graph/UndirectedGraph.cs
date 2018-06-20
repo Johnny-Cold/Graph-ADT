@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace Graph_ADT.graph
 {
-    public class Graph<V>
+    /// <summary>
+    /// Implementation of an undirected graph.
+    /// </summary>
+    /// <typeparam name="V"> Type name for vertices. </typeparam>
+    public class UndirectedGraph<V>
     {
-        protected bool isDirected; 
         protected List<V> vertices = new List<V>();
-        protected List<Edge<V>> edges = new List<Edge<V>>();
+        private List<UndirectedEdge<V>> edges = new List<UndirectedEdge<V>>();
 
         /// <summary>
         /// Class constructor.
         /// Creates an empty graph.
         /// </summary>
-        public Graph(bool isDirected)
-        {
-            this.isDirected = isDirected;
-        }
+        public UndirectedGraph(){}
         
         /// <summary>
         /// Class contructor.
@@ -28,9 +28,8 @@ namespace Graph_ADT.graph
         /// </summary>
         /// <param name="vertices"> A list of vertices to add to the graph. </param>
         /// <param name="edges"> A list of vertices t add to the graph. </param>
-        public Graph(bool isDirected, List<V> vertices, List<Edge<V>> edges)
+        public UndirectedGraph(List<V> vertices, List<UndirectedEdge<V>> edges)
         {
-            this.isDirected = isDirected;
             this.vertices = vertices;
             this.edges = edges;
         }
@@ -45,12 +44,16 @@ namespace Graph_ADT.graph
             return vertices.Count;
         }
 
-        public int numEdges()
+        public virtual int numEdges()
         {
             return edges.Count;
         }
 
-        public virtual void addEdge(Edge<V> edge)
+        /// <summary>
+        /// Adds a new edge to the graph.
+        /// </summary>
+        /// <param name="edge"> The new edge  to add. </param>
+        public virtual void addEdge(UndirectedEdge<V> edge)
         {
             edges.Add(edge);
             V[] endpoints = edge.getEndpoints();
@@ -64,13 +67,24 @@ namespace Graph_ADT.graph
                 }
             }
         }
-        
-        /// <returns> A list of edges for which the given vertex is an endpoint. </returns>
-        public List<Edge<V>> getEdges(V vertex)
-        {
-            List<Edge<V>> v_edges = new List<Edge<V>>();
 
-            foreach(Edge<V> edge in edges)
+        /// <summary>
+        /// Adds a new edge to the graph.
+        /// Edge addition is implied by the specification of a neighbouring edge.
+        /// </summary>
+        /// <param name="vertex"> A vertex to add. </param>
+        /// <param name="neighbour"> An opposite vertex to add. </param>
+        public virtual void addVertex(V vertex, V neighbour)
+        {
+            addEdge(new UndirectedEdge<V>(vertex, neighbour));
+        }
+
+        /// <returns> A list of edges for which the given vertex is an endpoint. </returns>
+        public virtual List<UndirectedEdge<V>> getEdges(V vertex)
+        {
+            List<UndirectedEdge<V>> v_edges = new List<UndirectedEdge<V>>();
+            
+            foreach(UndirectedEdge<V> edge in edges)
             {
                 if(edge.hasVertex(vertex))
                 {
@@ -80,48 +94,12 @@ namespace Graph_ADT.graph
 
             return v_edges;
         }
-
-        /// <returns> A list of edges for which the given vertex is a destination. </returns>
-        public List<Edge<V>> getInEdges(V vertex)
-        {
-            if (isDirected == false) { throw new InvalidOperationException("Undirected geaph has no incoming degree."); }
-
-            List<Edge<V>> v_edges = new List<Edge<V>>();
-
-            foreach(DirectedEdge<V> edge in edges)
-            {
-                if(edge.getDestination().Equals(vertex))
-                {
-                    v_edges.Add(edge);
-                }
-            }
-
-            return v_edges;
-        }
-
-        /// <returns> A list of edges for which the given vertex is an origin. </returns>
-        public List<Edge<V>> getOutEdges(V vertex)
-        {
-            if (isDirected == false) { throw new InvalidOperationException("Undirected geaph has no outgoing degree."); }
-
-            List<Edge<V>> v_edges = new List<Edge<V>>();
-
-            foreach (DirectedEdge<V> edge in edges)
-            {
-                if (edge.getOrigin().Equals(vertex))
-                {
-                    v_edges.Add(edge);
-                }
-            }
-
-            return v_edges;
-        }
-
+        
         /// <summary>
         /// Removes an edge.
         /// </summary>
         /// <param name="edge"> The edge to remove from the graph. </param>
-        public virtual void removeEdge(Edge<V> edge)
+        public virtual void removeEdge(UndirectedEdge<V> edge)
         {
              edges.Remove(edge);
         }
@@ -130,50 +108,35 @@ namespace Graph_ADT.graph
         /// Removes an edge as well as its endpoint vertices.
         /// </summary>
         /// <param name="edge"> The edge to remove from the graph. </param>
-        public virtual void removeEdgeAndEndpoints(Edge<V> edge)
+        public virtual void removeEdgeAndEndpoints(UndirectedEdge<V> edge)
         {
             V[] endpoints = edge.getEndpoints();
-            
-            foreach (V v in endpoints)
-            {
-                if (vertices.Contains(v))
-                {
-                    vertices.Remove(v);
-                }
-            }
-
             edges.Remove(edge);
+            vertices.Remove(endpoints[0]);
+            vertices.Remove(endpoints[1]);
         }
 
+        /// <summary>
+        /// Adds a new vertex to the graph, but to no specific edge.
+        /// </summary>
+        /// <param name="vertex"> The new vertex to add. </param>
         public virtual void addVertex(V vertex)
         {
             vertices.Add(vertex);
         }
-
-        public virtual void addVertex(V vertex, V neighbour)
-        {
-            if(isDirected == false)
-            {
-                addEdge(new UndirectedEdge<V>(vertex, neighbour));
-            }
-            else
-            {
-                addEdge(new DirectedEdge<V>(vertex, neighbour));
-            }
-        }
-
+        
         protected V getVertex(V vertex)
         {
             return vertices.Where(v => v.Equals(vertex)).SingleOrDefault();
         }
 
         /// <returns> Gets the vertex opposite a given vertex on a specified edge. </returns>
-        public V getNeighbour(V vertex, Edge<V> edge)
+        public V getNeighbour(V vertex, UndirectedEdge<V> edge)
         {
             return edges.Where(e => e.Equals(edge)).SingleOrDefault().getEndpoints().Where(v => !v.Equals(vertex)).SingleOrDefault();
         }
 
-        public V[] getEdgeEndpoints(Edge<V> edge)
+        public V[] getEdgeEndpoints(UndirectedEdge<V> edge)
         {
             return edge.getEndpoints(); 
         }
@@ -183,7 +146,7 @@ namespace Graph_ADT.graph
             vertices.Remove(vertex);
         
             // Removing the removed vertex from all the edges where it is an endpoint.    
-            foreach(Edge<V> edge in edges)
+            foreach(UndirectedEdge<V> edge in edges)
             {
                 if(edge.hasVertex(vertex))
                 {
@@ -206,20 +169,6 @@ namespace Graph_ADT.graph
         public int getDegree(V vertex)
         {
             return edges.Where(e => e.hasVertex(vertex)).Count();
-        }
-
-        /// <returns> The outgoing degree of the given vertex. </returns>
-        public int getOutDegree(V vertex)
-        {
-            if (isDirected == false) { throw new InvalidOperationException("Undirected geaph has no outgoing degree."); }
-            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
-        }
-
-        /// <returns> The incoming degree of the given vertex. </returns>
-        public int getInDegree(V vertex)
-        {
-            if (isDirected == false) { throw new InvalidOperationException("Undirected geaph has no incoming degree."); }
-            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
         }
 
         public virtual void clear()
