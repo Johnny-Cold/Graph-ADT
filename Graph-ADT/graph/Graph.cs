@@ -81,7 +81,7 @@ namespace Graph_ADT.graph
         /// <summary>
         /// Adds a new edge.
         /// </summary>
-        public void addEdge(V v, V u)
+        public virtual void addEdge(V v, V u)
         {
             Edge<V> edge = new Edge<V>(isDirected, v, u);
             edges.Add(edge);
@@ -112,19 +112,21 @@ namespace Graph_ADT.graph
         /// <returns> A list of all the edges in which the given vertex is the destiantion. </returns>
         public List<Edge<V>> getInEdges(V vertex)
         {
+            if (isDirected == false) { throw new InvalidOperationException("Invalid operation for an undirected graph."); }
             return edges.Where(e => e.getDestination().Equals(vertex)).ToList<Edge<V>>();
         }
 
         /// <returns> A list of all the edges in which the given vertex is the origin. </returns>
         public List<Edge<V>> getOutEdges(V vertex)
         {
+            if (isDirected == false) { throw new InvalidOperationException("Invalid operation for an undirected graph."); }
             return edges.Where(e => e.getOrigin().Equals(vertex)).ToList<Edge<V>>();
         }
 
         /// <summary>
         /// Removes a specified edge.
         /// </summary>
-        public void removeEdge(Edge<V> edge)
+        public virtual void removeEdge(Edge<V> edge)
         {
             edges.Remove(edge);
         }
@@ -132,7 +134,7 @@ namespace Graph_ADT.graph
         /// <summary>
         /// Removes an edge with the provided endpoints.
         /// </summary>
-        public void removeEdge(V v, V u)
+        public virtual void removeEdge(V v, V u)
         {
             removeEdge(new Edge<V>(isDirected, v, u));
         }
@@ -141,7 +143,7 @@ namespace Graph_ADT.graph
         /// Removes all the edges that have a specified vertex as an endpoint.
         /// </summary>
         /// <param name="vertex"></param>
-        public void removeEdges(V vertex)
+        public virtual void removeEdges(V vertex)
         {
             edges.RemoveAll(e => e.hasVertex(vertex));
         }
@@ -149,7 +151,7 @@ namespace Graph_ADT.graph
         /// <summary>
         /// Removes an edge and its endpoints.
         /// </summary>
-        public void removeEdgeAndEndpoints(Edge<V> edge)
+        public virtual void removeEdgeAndEndpoints(Edge<V> edge)
         {
             V[] endpoints = edge.getEndpoints();
             edges.Remove(edge);
@@ -157,7 +159,7 @@ namespace Graph_ADT.graph
             vertices.Remove(endpoints[1]);
         }
 
-        public void addVertex(V vertex)
+        public virtual void addVertex(V vertex)
         {
             vertices.Add(vertex);
         }
@@ -167,8 +169,8 @@ namespace Graph_ADT.graph
         {
             return vertices;
         }
-
-        public void removeVertex(V vertex)
+        
+        public virtual void removeVertex(V vertex)
         {
             vertices.Remove(vertex);
 
@@ -195,7 +197,7 @@ namespace Graph_ADT.graph
         /// <summary>
         /// Clears the graph.
         /// </summary>
-        public void clear()
+        public virtual void clear()
         {
             vertices.Clear();
             edges.Clear();
