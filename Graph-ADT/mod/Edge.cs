@@ -88,7 +88,7 @@ namespace Graph_ADT.mod
 
         public override string ToString()
         {
-            if (isDirected == true)
+            if (isDirected == false)
             {
                 return u.ToString() + " ---------------- " + v.ToString();
             }

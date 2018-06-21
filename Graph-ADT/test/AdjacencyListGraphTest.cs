@@ -32,59 +32,51 @@ namespace Graph_ADT.test
             vertices.Add(new Vertex<string>("BOS")); //6
         }
 
-        #region Undirected graph
-
-        private void populateUndirectedGraph()
+        private void populateGraph()
         {
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[0], vertices[5]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[0], vertices[4]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[0], vertices[1]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[0], vertices[6]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[1], vertices[6]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[1], vertices[5]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[1], vertices[2]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[3], vertices[5]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[3], vertices[4]));
-            graph.addEdge(new UndirectedEdge<Vertex<string>>(vertices[4], vertices[5]));
-        }
-
-        private void addUndirectedEdge()
-        {
-            UndirectedEdge<Vertex<string>> edge = new UndirectedEdge<Vertex<string>>(vertices[6], vertices[2]);
-            Console.WriteLine("Adding edge " + edge.ToString());
-            graph.addEdge(edge);
+            graph.addEdge(vertices[0], vertices[5]);
+            graph.addEdge(vertices[0], vertices[4]);
+            graph.addEdge(vertices[0], vertices[1]);
+            graph.addEdge(vertices[0], vertices[6]);
+            graph.addEdge(vertices[1], vertices[6]);
+            graph.addEdge(vertices[1], vertices[5]);
+            graph.addEdge(vertices[1], vertices[2]);
+            graph.addEdge(vertices[3], vertices[5]);
+            graph.addEdge(vertices[3], vertices[4]);
+            graph.addEdge(vertices[4], vertices[5]);
             graph.printEdges();
         }
 
-        private void removeUndirectedEdge()
+        private void addEdge()
         {
-            UndirectedEdge<Vertex<string>> edge = new UndirectedEdge<Vertex<string>>(vertices[1], vertices[2]);
+            Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[6], vertices[2]);
+            Console.WriteLine("Adding edge " + edge.ToString());
+            graph.addEdge(vertices[6], vertices[2]);
+            graph.printEdges();
+        }
+
+        private void removeEdge()
+        {
+            Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[1], vertices[2]);
             Console.WriteLine("Removing edge " + edge.ToString());
             graph.removeEdge(edge);
             graph.printEdges();
         }
 
-        private void removeUndirectedEdgeAndEndpoints()
+        private void removeEdgeAndEndpoints()
         {
-            UndirectedEdge<Vertex<string>> edge = new UndirectedEdge<Vertex<string>>(vertices[6], vertices[2]);
+            Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[6], vertices[2]);
             Console.WriteLine("Removing edge " + edge.ToString() + " and its endpoints");
             graph.removeEdgeAndEndpoints(edge);
             graph.printEdges();
         }
-
+        
         public void runTest()
         {
-            if (isDirected == false)
-            {
-                populateUndirectedGraph();
-                addUndirectedEdge();
-                removeUndirectedEdge();
-                removeUndirectedEdgeAndEndpoints();
-            }
+            populateGraph();
+            addEdge();
+            removeEdge();
+            removeEdgeAndEndpoints();
         }
-        #endregion
-
-        #region Directed graph
-        #endregion
     }
 }

@@ -46,6 +46,7 @@ namespace Graph_ADT.graph
         {
             int[] indices = new int[2];
             Edge<V> edge = new Edge<V>(isDirected, v, u);
+            edges.Add(edge);
             V[] endpoints = edge.getEndpoints();
 
             for (int k = 0; k <= 1; k++)
@@ -58,7 +59,7 @@ namespace Graph_ADT.graph
                     adjacencyList.Add(new List<V>());
                 }
 
-                indices[k] = vertices.IndexOf(v);
+                indices[k] = vertices.IndexOf(endpoint);
             }
 
             adjacencyList[indices[0]].Add(vertices[indices[1]]);
@@ -104,7 +105,6 @@ namespace Graph_ADT.graph
             int i2 = vertices.IndexOf(endpoints[1]);
 
             // Removing corresponding adjacency lists.
-            adjacencyList.RemoveAll(e => e.Equals(edge));
             adjacencyList.RemoveAt(i1);
             adjacencyList.RemoveAt(i2);
 
