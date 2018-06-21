@@ -45,13 +45,9 @@
   <ItemGroup>
     <Compile Include="graph\AdjacencyListGraph.cs" />
     <Compile Include="graph\AdjacencyMapGraph.cs" />
-    <Compile Include="graph\DirectedGraph.cs" />
     <Compile Include="graph\Graph.cs" />
     <Compile Include="mod\ArrayList.cs" />
-    <Compile Include="mod\DirectedEdge.cs" />
     <Compile Include="mod\Edge.cs" />
-    <Compile Include="mod\UndirectedEdge.cs" />
-    <Compile Include="graph\UndirectedGraph.cs" />
     <Compile Include="map\HashMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

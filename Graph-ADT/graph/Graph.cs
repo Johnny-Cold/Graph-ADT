@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Graph_ADT.mod;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,53 +7,198 @@ using System.Threading.Tasks;
 
 namespace Graph_ADT.graph
 {
-    public interface Graph<V,E>
+    public class Graph<V>
     {
+        protected List<V> vertices;
+        protected List<Edge<V>> edges;
+        protected bool isDirected = false; // Dictates the directionality of the graph. The graph is undirected by default.
+
+        /// <summary>
+        /// Creates an empty undirected graph.
+        /// </summary>
+        public Graph()
+        {
+            vertices = new List<V>();
+            edges = new List<Edge<V>>();
+        }
+
+        /// <summary>
+        /// Creates an empty graph with specified directionality.
+        /// </summary>
+        public Graph(bool isDirected)
+        {
+            this.isDirected = isDirected;
+            vertices = new List<V>();
+            edges = new List<Edge<V>>();
+        }
+
+        /// <summary>
+        /// Creates a graph with specified directionality, vertices, and edges.
+        /// </summary>
+        public Graph(bool isDirected, List<V> vertices, List<Edge<V>> edges)
+        {
+            this.isDirected = isDirected;
+            this.vertices = vertices;
+            this.edges = edges;
+        }
+
         /// <returns> A boolean indication that the graph is empty (has no vertices). </returns>
-        bool isEmpty();
+        public bool isEmpty()
+        {
+            return getNumVertices() == 0;
+        }
+        
+        public int getNumVertices()
+        {
+            return vertices.Count;
+        }
 
-        int getNumVertices();
-
-        int getNumEdges();
+        public int getNumEdges()
+        {
+            return edges.Count;
+        }
 
         /// <returns> The degree of the given vertex. </returns>
-        int getDegree(V vertex);
+        public int getDegree(V vertex)
+        {
+            return edges.Where(e => e.hasVertex(vertex)).Count();
+        }
 
-        /// <summary>
-        /// Adds a new edge to the graph.
-        /// </summary>
-        void addEdge(E edge);
+        /// <returns> The incoming degree of the given vertex. </returns>
+        public int getInDegree(V vertex)
+        {
+            if (isDirected == false) { throw new InvalidOperationException("Invalid operation for an undirected graph."); }
+            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
+        }
 
-        /// <summary>
-        /// Adds a new edge to the graph implied by the addition of opposite vertices.
-        /// </summary>
-        void addEdge(V vertex, V neighbour);
+        /// <returns> The outgoing degree of the given vertex. </returns>
+        public int getOutDegree(V vertex)
+        {
+            if (isDirected == false) { throw new InvalidOperationException("Invalid operation for an undirected graph."); }
+            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
+        }
         
+        /// <summary>
+        /// Adds a new edge.
+        /// </summary>
+        public void addEdge(V v, V u)
+        {
+            Edge<V> edge = new Edge<V>(isDirected, v, u);
+            edges.Add(edge);
+            V[] endpoints = edge.getEndpoints();
+
+            // If the list of vertices does not already have a vertex in the new edge, add the vertex to the list.
+            foreach (V endpoint in endpoints)
+            {
+                if (!vertices.Contains(endpoint))
+                {
+                    vertices.Add(endpoint);
+                }
+            }
+        }
+        
+        /// <returns> All the edges in the graph. </returns>
+        List<Edge<V>> getEdges()
+        {
+            return edges;
+        }
+
         /// <returns> All the edges for which the specified vertex is an endpoint. </returns>
-        List<E> getEdges(V vertex);
+        List<Edge<V>> getEdges(V vertex)
+        {
+            return edges.Where(e => e.hasVertex(vertex)).ToList<Edge<V>>();
+        }
         
+        /// <returns> A list of all the edges in which the given vertex is the destiantion. </returns>
+        public List<Edge<V>> getInEdges(V vertex)
+        {
+            return edges.Where(e => e.getDestination().Equals(vertex)).ToList<Edge<V>>();
+        }
+
+        /// <returns> A list of all the edges in which the given vertex is the origin. </returns>
+        public List<Edge<V>> getOutEdges(V vertex)
+        {
+            return edges.Where(e => e.getOrigin().Equals(vertex)).ToList<Edge<V>>();
+        }
+
         /// <summary>
         /// Removes a specified edge.
         /// </summary>
-        void removeEdge(E edge);
+        public void removeEdge(Edge<V> edge)
+        {
+            edges.Remove(edge);
+        }
 
         /// <summary>
-        /// Removes the edge that has the two given vertices as its endpoints.
+        /// Removes an edge with the provided endpoints.
         /// </summary>
-        void removeEdge(V v, V u);
+        public void removeEdge(V v, V u)
+        {
+            removeEdge(new Edge<V>(isDirected, v, u));
+        }
+
+        /// <summary>
+        /// Removes all the edges that have a specified vertex as an endpoint.
+        /// </summary>
+        /// <param name="vertex"></param>
+        public void removeEdges(V vertex)
+        {
+            edges.RemoveAll(e => e.hasVertex(vertex));
+        }
 
         /// <summary>
         /// Removes an edge and its endpoints.
         /// </summary>
-        void removeEdgeAndEndpoints(E edge);
+        public void removeEdgeAndEndpoints(Edge<V> edge)
+        {
+            V[] endpoints = edge.getEndpoints();
+            edges.Remove(edge);
+            vertices.Remove(endpoints[0]);
+            vertices.Remove(endpoints[1]);
+        }
 
-        void addVertex(V vertex);
+        public void addVertex(V vertex)
+        {
+            vertices.Add(vertex);
+        }
 
-        void removeVertex(V vertex);
+        /// <returns> All the vertices in the graph. </returns>
+        public List<V> getVertices()
+        {
+            return vertices;
+        }
+
+        public void removeVertex(V vertex)
+        {
+            vertices.Remove(vertex);
+
+            // Removing the removed vertex from all the edges where it is an endpoint.    
+            foreach (Edge<V> edge in edges)
+            {
+                if (edge.hasVertex(vertex))
+                {
+                    V[] endpoints = edge.getEndpoints();
+
+                    for (int i = 0; i < 2; i++)
+                    {
+                        if (endpoints[i].Equals(vertex))
+                        {
+                            endpoints[i] = default(V);
+                        }
+                    }
+
+                    edge.setEndpoints(endpoints);
+                }
+            }
+        }
 
         /// <summary>
         /// Clears the graph.
         /// </summary>
-        void clear();
+        public void clear()
+        {
+            vertices.Clear();
+            edges.Clear();
+        }
     }
 }

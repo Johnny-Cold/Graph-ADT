@@ -11,15 +11,60 @@ namespace Graph_ADT.graph
     /// Implementation of a graph using adjacency lists.
     /// </summary>
     /// <typeparam name="V"> Type name for vertices. </typeparam>
-    public class AdjacencyListGraph<V> : UndirectedGraph<V>
+    public class AdjacencyListGraph<V,E> 
     {
-        private List<List<V>> adjacencyList = new List<List<V>>();
+        private Graph<V, E> graph;
+        private List<V> vertices;
+        private List<E> edges;
+        private List<List<V>> adjacencyList;
+        private bool isDirected;
 
-        public AdjacencyListGraph(bool isDirected) : base(isDirected){}
-
-        public AdjacencyListGraph(bool isDirected, List<V> vertices, List<Edge<V>> edges) : base(isDirected, vertices, edges)
+        public AdjacencyListGraph()
         {
-            createAdjacencyLists(vertices, edges);
+            adjacencyList = new List<List<V>>();
+            graphDirectionalty();
+            
+            if (isDirected == true)
+            {
+               graph = new DirectedGraph<V>();
+                DirectedGraph<V,E> g = graph;
+            }
+            else
+            {
+                graph = new UndirectedGraph<V>();
+            }
+
+            vertices = graph.getVertices();
+            edges = graph.getEdges();
+        }
+        
+        public AdjacencyListGraph(List<V> vertices, List<Edge<V>> edges) 
+        {
+            adjacencyList = new List<List<V>>();
+            graphDirectionalty();
+
+            if(isDirected == true)
+            {
+                graph = new DirectedGraph<V>(vertices, edges);
+            }
+            else
+            {
+                graph = new UndirectedGraph<V>(vertices, edges);
+            }
+
+            this.vertices = graph.getVertices();
+            this.edges = graph.getEdges();
+
+            createAdjacencyLists(vertices, edges);    
+        }
+
+        /// <summary>
+        /// Determines whether or not the graph has directed or undirected edges.
+        /// </summary>
+        private void graphDirectionalty()
+        {
+            Type edgeType = typeof(E);
+            isDirected = (edgeType == typeof(DirectedEdge<V>)) ? true : false;
         }
 
         /// <summary>
@@ -40,7 +85,7 @@ namespace Graph_ADT.graph
             }
         }
 
-        public override void addEdge(Edge<V> edge)
+        public void addEdge(E edge)
         {
             // Ensuring the correct type of edge is used.
             if((edge is DirectedEdge<V>) && isDirected == false)
@@ -74,13 +119,13 @@ namespace Graph_ADT.graph
         /// Removes all occurrences of the edge in the adjacency lists.
         /// </summary>
         /// <param name="edge"> The edge to remove. </param>
-        public override void removeEdge(Edge<V> edge)
+        public void removeEdge(E edge)
         {
             adjacencyList.RemoveAll(e => e.Equals(edge));
-            base.removeEdge(edge);
+            graph.removeEdge(edge);
         }
 
-        public override void removeEdgeAndEndpoints(Edge<V> edge)
+        public void removeEdgeAndEndpoints(E edge)
         {
             V[] endpoints = edge.getEndpoints();
             int i1 = vertices.IndexOf(endpoints[0]);
@@ -91,16 +136,16 @@ namespace Graph_ADT.graph
             adjacencyList.RemoveAt(i1);
             adjacencyList.RemoveAt(i2);
             
-            base.removeEdgeAndEndpoints(edge);
+            graph.removeEdgeAndEndpoints(edge);
         }
 
-        public override void addVertex(V vertex)
+        public void addVertex(V vertex)
         {
             vertices.Add(vertex);
             adjacencyList.Add(new List<V>());
         }
 
-        public override void addVertex(V vertex, V neighbour)
+        public void addVertex(V vertex, V neighbour)
         {
             if(isDirected == true)
             {
@@ -117,11 +162,11 @@ namespace Graph_ADT.graph
         /// Removes the corresponding adjacency list for the vertex to remove.
         /// </summary>
         /// <param name="vertex"> The vertex to remove. </param>
-        public override void removeVertex(V vertex)
+        public void removeVertex(V vertex)
         {
             int indexOfVertex = vertices.IndexOf(vertex);
             adjacencyList.Remove(adjacencyList[indexOfVertex]);
-            base.removeVertex(vertex);
+            graph.removeVertex(vertex);
         }
 
         /// <summary>
@@ -130,7 +175,7 @@ namespace Graph_ADT.graph
         /// </summary>
         public void printEdges()
         {
-            if(numVertices() == 0)
+            if(graph.getNumVertices() == 0)
             {
                 Console.WriteLine("The graph is empty.");
             }
@@ -176,9 +221,9 @@ namespace Graph_ADT.graph
             }
         }
         
-        public override void clear()
+        public void clear()
         {
-            base.clear();
+            graph.clear();
             adjacencyList.Clear();
         }
     }
