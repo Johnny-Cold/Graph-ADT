@@ -116,11 +116,7 @@ namespace Graph_ADT.graph
             base.removeVertex(vertex);
         }
 
-        /// <summary>
-        /// Prints all the vertices and edges of the graph.
-        /// Prints edges differently based on their direction (if the graph is in fact directed).
-        /// </summary>
-        public void printEdges()
+        public override void printEdges()
         {
             if (isEmpty())
             {

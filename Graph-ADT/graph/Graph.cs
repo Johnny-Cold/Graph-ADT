@@ -206,6 +206,39 @@ namespace Graph_ADT.graph
         }
 
         /// <summary>
+        /// Prints all the vertices and edges of the graph.
+        /// Prints edges differently based on their direction (if the graph is in fact directed).
+        /// </summary>
+        public virtual void printEdges()
+        {
+            if (isEmpty())
+            {
+                Console.WriteLine("The graph is empty.");
+            }
+
+            foreach (V vertex in vertices)
+            {
+                List<Edge<V>> v_edges = getEdges(vertex);
+                Console.WriteLine(vertex.ToString().ToUpper() + ": \n");
+
+                foreach(Edge<V> edge in v_edges)
+                {
+                    V endpoint = edge.getEndpoints().Where(e => !(e.Equals(vertex))).SingleOrDefault();
+                    if (isDirected == false)
+                    {
+                        Console.WriteLine(vertex.ToString() + " ---------------------- " + endpoint);
+                    }
+                    else
+                    {
+                        Console.WriteLine(vertex.ToString() + " *----------------------> " + endpoint);
+                    }
+                }
+
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
         /// Clears the graph.
         /// </summary>
         public virtual void clear()
