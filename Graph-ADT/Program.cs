@@ -13,6 +13,7 @@ namespace Graph_ADT
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("****************** ADJACENCY LIST GRAPH TEST ******************\n\n");
             AdjacencyListGraphTest listTest = new AdjacencyListGraphTest(false);
             listTest.runTest();
             Console.ReadLine();

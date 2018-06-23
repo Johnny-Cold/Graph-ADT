@@ -126,6 +126,7 @@ namespace Graph_ADT.graph
         {
             int indexOfVertex = vertices.IndexOf(vertex);
             adjacencyList.Remove(adjacencyList[indexOfVertex]);
+            adjacencyList[indexOfVertex] = null;
             base.removeVertex(vertex);
         }
 
@@ -139,40 +140,21 @@ namespace Graph_ADT.graph
             {
                 Console.WriteLine("The graph is empty.");
             }
-
-            if (isDirected == false)
+            
             {
                 for (int u = 0; u < adjacencyList.Count; u++)
                 {
-                    Console.WriteLine(vertices[u].ToString().ToUpper() + ": ");
+                    Console.WriteLine(vertices[u].ToString().ToUpper() + ": \n");
 
                     for (int j = 0; j < adjacencyList[u].Count; j++)
                     {
-                        Console.WriteLine(vertices[u].ToString() + " ----------------------  " + (adjacencyList[u])[j]);
-                    }
-
-                    Console.WriteLine();
-                }
-            }
-            else
-            {
-                for (int u = 0; u < adjacencyList.Count; u++)
-                {
-                    Console.WriteLine(vertices[u].ToString().ToUpper() + ": ");
-
-                    for (int j = 0; j < adjacencyList[u].Count; j++)
-                    {
-                        V vertex = vertices[u];
-                        V neighbour = (adjacencyList[u])[j];
-                        Edge<V> edge = edges.Where(e => e.hasVertices(vertex, neighbour)).SingleOrDefault();
-
-                        if (edge.getOrigin().Equals(vertex))
+                        if (isDirected == false)
                         {
-                            Console.WriteLine(vertex.ToString() + " *---------------------> " + neighbour.ToString());
+                            Console.WriteLine(vertices[u].ToString() + " ---------------------- " + (adjacencyList[u])[j]);
                         }
-                        else if (edge.getDestination().Equals(vertex))
+                        else
                         {
-                            Console.WriteLine(vertex.ToString() + " <---------------------* " + neighbour.ToString());
+                            Console.WriteLine(vertices[u].ToString() + " *----------------------> " + (adjacencyList[u])[j]);
                         }
                     }
 

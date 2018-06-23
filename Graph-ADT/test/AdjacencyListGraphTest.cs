@@ -50,7 +50,7 @@ namespace Graph_ADT.test
         private void addEdge()
         {
             Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[6], vertices[2]);
-            Console.WriteLine("Adding edge " + edge.ToString());
+            Console.WriteLine("Adding edge " + edge.ToString() + "\n");
             graph.addEdge(vertices[6], vertices[2]);
             graph.printEdges();
         }
@@ -58,7 +58,7 @@ namespace Graph_ADT.test
         private void removeEdge()
         {
             Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[1], vertices[2]);
-            Console.WriteLine("Removing edge " + edge.ToString());
+            Console.WriteLine("Removing edge " + edge.ToString() + "\n");
             graph.removeEdge(edge);
             graph.printEdges();
         }
@@ -66,7 +66,7 @@ namespace Graph_ADT.test
         private void removeEdgeAndEndpoints()
         {
             Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[6], vertices[2]);
-            Console.WriteLine("Removing edge " + edge.ToString() + " and its endpoints");
+            Console.WriteLine("Removing edge " + edge.ToString() + " and its endpoints" + "\n");
             graph.removeEdgeAndEndpoints(edge);
             graph.printEdges();
         }

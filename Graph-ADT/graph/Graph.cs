@@ -96,15 +96,20 @@ namespace Graph_ADT.graph
                 }
             }
         }
+
+        protected void addEdge(Edge<V> edge)
+        {
+            addEdge(edge.getEndpoints()[0], edge.getEndpoints()[1]);
+        }
         
         /// <returns> All the edges in the graph. </returns>
-        List<Edge<V>> getEdges()
+        public List<Edge<V>> getEdges()
         {
             return edges;
         }
 
         /// <returns> All the edges for which the specified vertex is an endpoint. </returns>
-        List<Edge<V>> getEdges(V vertex)
+        public List<Edge<V>> getEdges(V vertex)
         {
             return edges.Where(e => e.hasVertex(vertex)).ToList<Edge<V>>();
         }
@@ -123,6 +128,12 @@ namespace Graph_ADT.graph
             return edges.Where(e => e.getOrigin().Equals(vertex)).ToList<Edge<V>>();
         }
 
+        /// <returns> the edge that has the given vertices as its endpoints. </returns>
+        protected Edge<V> getEdge(V v, V u)
+        {
+            return edges.Where(e => e.hasVertices(v, u)).SingleOrDefault();
+        }
+        
         /// <summary>
         /// Removes a specified edge.
         /// </summary>
