@@ -48,6 +48,11 @@ namespace Graph_ADT.mod
             return (u.Equals(v) || (u.Equals(u))) && (v.Equals(v) || (v.Equals(u)));
         }
 
+        public object getValue()
+        {
+            return value;
+        }
+
         public void setDirectionality(bool isDirected)
         {
             this.isDirected = isDirected;
@@ -96,19 +101,37 @@ namespace Graph_ADT.mod
 
         public override bool Equals(object obj)
         {
-            return ((base.Equals(obj)) && (obj.ToString().Equals(this.ToString())) && (this.isDirected == ((Edge<V>)obj).isDirected));
+            return ((base.Equals(obj)) && (obj.ToString().Equals(this.ToString())) && ((isDirected == ((Edge<V>)obj).isDirected)) && (value == ((Edge<V>)obj).getValue()));
         }
 
         public override string ToString()
         {
-            if (isDirected == false)
+            string output = "";
+
+            if(value != null)
             {
-                return (value != null) ? u.ToString() + " ---------------- " + v.ToString() : u.ToString() + " -------- " + value.ToString() + " -------- " + v.ToString();
+                if (isDirected == false)
+                {
+                    output = u.ToString() + " -------- " + value.ToString() + " -------- " + v.ToString();
+                }
+                else
+                {
+                    output = u.ToString() + " *-------- " + value.ToString() + " --------> " + v.ToString();
+                }
             }
             else
             {
-                return (value != null) ? u.ToString() + " *----------------> " + v.ToString() : u.ToString() + " *-------- " + value.ToString() + " --------> " + v.ToString();
+                if (isDirected == false)
+                {
+                    output = u.ToString() + " ---------------- " + v.ToString();
+                }
+                else
+                {
+                    output = u.ToString() + " *----------------> " + v.ToString();
+                }
             }
+
+            return output;
         }
     }
 }

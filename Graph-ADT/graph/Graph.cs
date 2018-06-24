@@ -79,11 +79,14 @@ namespace Graph_ADT.graph
         }
         
         /// <summary>
-        /// Adds a new edge.
+        /// Adds a new edge with a value.
         /// </summary>
-        public virtual void addEdge(V v, V u)
+        /// <param name="v"> Edge endpoint. </param>
+        /// <param name="u"> Edge endpoint. </param>
+        /// <param name="value"> A value contained by the edge. </param>
+        public virtual void addEdge(V v, V u, object value)
         {
-            Edge<V> edge = new Edge<V>(isDirected, v, u);
+            Edge<V> edge = new Edge<V>(isDirected, v, u, value);
             edges.Add(edge);
             V[] endpoints = edge.getEndpoints();
 
@@ -97,9 +100,17 @@ namespace Graph_ADT.graph
             }
         }
 
-        protected void addEdge(Edge<V> edge)
+        /// <summary>
+        /// Adds a new edge that has no value.
+        /// </summary>
+        public virtual void addEdge(V v, V u)
         {
-            addEdge(edge.getEndpoints()[0], edge.getEndpoints()[1]);
+            addEdge(v, u, null);
+        }
+
+        public virtual void addEdge(Edge<V> edge)
+        {
+            addEdge(edge.getEndpoints()[0], edge.getEndpoints()[1], edge.getValue());
         }
         
         /// <returns> All the edges in the graph. </returns>

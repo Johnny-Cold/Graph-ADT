@@ -49,15 +49,15 @@ namespace Graph_ADT.test
 
         private void addEdge()
         {
-            Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[6], vertices[2]);
+            Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[6], vertices[2], 81);
             Console.WriteLine("Adding edge " + edge.ToString() + "\n");
-            graph.addEdge(vertices[6], vertices[2]);
+            graph.addEdge(edge);
             graph.printEdges();
         }
 
         private void removeEdge()
         {
-            Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[1], vertices[2]);
+            Edge<Vertex<string>> edge = new Edge<Vertex<string>>(isDirected, vertices[1], vertices[2], 81);
             Console.WriteLine("Removing edge " + edge.ToString() + "\n");
             graph.removeEdge(edge);
             graph.printEdges();

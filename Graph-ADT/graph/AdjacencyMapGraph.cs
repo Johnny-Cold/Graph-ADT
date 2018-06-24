@@ -49,12 +49,25 @@ namespace Graph_ADT.graph
             }
         }
 
-        public override void addEdge(V v, V u)
+        public override void addEdge(V v, V u, object value)
         {
-            Edge<V> edge = new Edge<V>(isDirected, v, u);
+            Edge<V> edge = new Edge<V>(isDirected, v, u, value);
             SeparateChainingHashMap<V, Edge<V>> hashMap = new SeparateChainingHashMap<V, Edge<V>>();
             hashMap.put(u, edge);
             adjacencyMap.Add(hashMap);
+            base.addEdge(edge);
+        }
+
+        public override void addEdge(V v, V u)
+        {
+            addEdge(v, u, null);
+            base.addEdge(v, u);
+        }
+
+        public override void addEdge(Edge<V> edge)
+        {
+            V[] endpoints = edge.getEndpoints();
+            addEdge(endpoints[0], endpoints[1], edge.getValue());
             base.addEdge(edge);
         }
 

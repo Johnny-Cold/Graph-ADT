@@ -42,10 +42,10 @@ namespace Graph_ADT.graph
             }
         }
 
-        public override void addEdge(V v, V u)
+        public override void addEdge(V v, V u, object value)
         {
             int[] indices = new int[2];
-            Edge<V> edge = new Edge<V>(isDirected, v, u);
+            Edge<V> edge = new Edge<V>(isDirected, v, u, value);
             edges.Add(edge);
             V[] endpoints = edge.getEndpoints();
 
@@ -64,6 +64,19 @@ namespace Graph_ADT.graph
 
             adjacencyList[indices[0]].Add(vertices[indices[1]]);
             adjacencyList[indices[1]].Add(vertices[indices[0]]);
+        }
+
+        public override void addEdge(V v, V u)
+        {
+            addEdge(v, u, null);
+            base.addEdge(v, u);
+        }
+
+        public override void addEdge(Edge<V> edge)
+        {
+            V[] endpoints = edge.getEndpoints();
+            addEdge(endpoints[0], endpoints[1], edge.getValue());
+            base.addEdge(edge);
         }
 
         /// <summary>
