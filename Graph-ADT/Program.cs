@@ -1,6 +1,4 @@
-﻿using Graph_ADT.graph;
-using Graph_ADT.mod;
-using Graph_ADT.test;
+﻿using Graph_ADT.test;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,15 +11,15 @@ namespace Graph_ADT
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("****************** GRAPH TEST ******************\n\n");
-            GraphTest graphTest = new GraphTest(true);
-            graphTest.runTest();
-            Console.ReadLine();
-
-            //Console.WriteLine("****************** ADJACENCY LIST GRAPH TEST ******************\n\n");
-            //AdjacencyListGraphTest listTest = new AdjacencyListGraphTest(false);
-            //listTest.runTest();
+            //Console.WriteLine("****************** GRAPH TEST ******************\n\n");
+            //GraphTest graphTest = new GraphTest(true);
+            //graphTest.runTest();
             //Console.ReadLine();
+
+            Console.WriteLine("****************** ADJACENCY LIST GRAPH TEST ******************\n\n");
+            AdjacencyListGraphTest listTest = new AdjacencyListGraphTest(false);
+            listTest.runTest();
+            Console.ReadLine();
         }
     }
 }

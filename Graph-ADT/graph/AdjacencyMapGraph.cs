@@ -61,14 +61,12 @@ namespace Graph_ADT.graph
         public override void addEdge(V v, V u)
         {
             addEdge(v, u, null);
-            base.addEdge(v, u);
         }
 
         public override void addEdge(Edge<V> edge)
         {
             V[] endpoints = edge.getEndpoints();
             addEdge(endpoints[0], endpoints[1], edge.getValue());
-            base.addEdge(edge);
         }
 
         public override void removeEdge(Edge<V> edge)
