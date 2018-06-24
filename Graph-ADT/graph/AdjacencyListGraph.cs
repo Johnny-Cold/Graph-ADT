@@ -102,7 +102,7 @@ namespace Graph_ADT.graph
         {
             V[] endpoints = edge.getEndpoints();
             int i1 = vertices.IndexOf(endpoints[0]);
-            int i2 = vertices.IndexOf(endpoints[1]);
+            int i2 = vertices.IndexOf(endpoints[1]) - 1;
 
             // Removing corresponding adjacency lists.
             adjacencyList.RemoveAt(i1);
@@ -129,36 +129,7 @@ namespace Graph_ADT.graph
             adjacencyList[indexOfVertex] = null;
             base.removeVertex(vertex);
         }
-
-        public override void printEdges()
-        {
-            if (isEmpty())
-            {
-                Console.WriteLine("The graph is empty.");
-            }
-            
-            {
-                for (int u = 0; u < adjacencyList.Count; u++)
-                {
-                    Console.WriteLine(vertices[u].ToString().ToUpper() + ": \n");
-
-                    for (int j = 0; j < adjacencyList[u].Count; j++)
-                    {
-                        if (isDirected == false)
-                        {
-                            Console.WriteLine(vertices[u].ToString() + " ---------------------- " + (adjacencyList[u])[j]);
-                        }
-                        else
-                        {
-                            Console.WriteLine(vertices[u].ToString() + " *----------------------> " + (adjacencyList[u])[j]);
-                        }
-                    }
-
-                    Console.WriteLine();
-                }
-            }
-        }
-
+        
         public override void clear()
         {
             base.clear();

@@ -53,6 +53,7 @@
     <Compile Include="map\SeparateChainingHashMap.cs" />
     <Compile Include="mod\Vertex.cs" />
     <Compile Include="test\AdjacencyListGraphTest.cs" />
+    <Compile Include="test\GraphTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

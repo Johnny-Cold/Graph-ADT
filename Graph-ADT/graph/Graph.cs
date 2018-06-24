@@ -68,14 +68,14 @@ namespace Graph_ADT.graph
         public int getInDegree(V vertex)
         {
             if (isDirected == false) { throw new InvalidOperationException("Invalid operation for an undirected graph."); }
-            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
+            return edges.Where(e => e.getDestination().Equals(vertex)).Count();
         }
 
         /// <returns> The outgoing degree of the given vertex. </returns>
         public int getOutDegree(V vertex)
         {
             if (isDirected == false) { throw new InvalidOperationException("Invalid operation for an undirected graph."); }
-            return edges.Where(e => e.getEndpoints()[0].Equals(vertex)).Count();
+            return edges.Where(e => e.getOrigin().Equals(vertex)).Count();
         }
         
         /// <summary>
@@ -223,15 +223,7 @@ namespace Graph_ADT.graph
 
                 foreach(Edge<V> edge in v_edges)
                 {
-                    V endpoint = edge.getEndpoints().Where(e => !(e.Equals(vertex))).SingleOrDefault();
-                    if (isDirected == false)
-                    {
-                        Console.WriteLine(vertex.ToString() + " ---------------------- " + endpoint);
-                    }
-                    else
-                    {
-                        Console.WriteLine(vertex.ToString() + " *----------------------> " + endpoint);
-                    }
+                    Console.WriteLine(edge.ToString());
                 }
 
                 Console.WriteLine();

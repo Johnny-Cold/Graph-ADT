@@ -116,33 +116,10 @@ namespace Graph_ADT.graph
             base.removeVertex(vertex);
         }
 
-        public override void printEdges()
+        public override void clear()
         {
-            if (isEmpty())
-            {
-                Console.WriteLine("The graph is empty.");
-            }
-
-            
-            {
-                for (int u = 0; u < adjacencyMap.Count; u++)
-                {
-                    Console.WriteLine(vertices[u].ToString().ToUpper() + ": \n");
-                    List<KeyValuePair<V,Edge<V>>> content = adjacencyMap[u].entrySet();
-
-                    for(int i = 0; i < content.Count; i++)
-                    {
-                        if (isDirected == false)
-                        {
-                            Console.WriteLine(vertices[u].ToString() + " ----------------------  " + content[i].Key.ToString());
-                        }
-                        else
-                        {
-                            Console.WriteLine(vertices[u].ToString() + " *---------------------->  " + content[i].Key.ToString());
-                        }
-                    }
-                }
-            }
-        } 
+            adjacencyMap.Clear();
+            base.clear();
+        }
     }
 }

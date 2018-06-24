@@ -14,6 +14,7 @@ namespace Graph_ADT.mod
     {
         private V u, v;
         private bool isDirected; // Dictates edge directionality.
+        private object value;
 
         /// <summary>
         /// Creates a directed edge.
@@ -23,6 +24,18 @@ namespace Graph_ADT.mod
             this.isDirected = isDirected;
             this.u = u;
             this.v = v;
+            value = null;
+        }
+
+        /// <summary>
+        /// Creates a directed edge.
+        /// </summary>
+        public Edge(bool isDirected, V u, V v, object value)
+        {
+            this.isDirected = isDirected;
+            this.u = u;
+            this.v = v;
+            this.value = value;
         }
         
         public bool hasVertex(V vertex)
@@ -90,11 +103,11 @@ namespace Graph_ADT.mod
         {
             if (isDirected == false)
             {
-                return u.ToString() + " ---------------- " + v.ToString();
+                return (value != null) ? u.ToString() + " ---------------- " + v.ToString() : u.ToString() + " -------- " + value.ToString() + " -------- " + v.ToString();
             }
             else
             {
-                return u.ToString() + " *----------------> " + v.ToString();
+                return (value != null) ? u.ToString() + " *----------------> " + v.ToString() : u.ToString() + " *-------- " + value.ToString() + " --------> " + v.ToString();
             }
         }
     }

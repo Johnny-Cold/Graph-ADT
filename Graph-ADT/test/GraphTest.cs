@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 namespace Graph_ADT.test
 {
     /// <summary>
-    /// Class containing methods to test an adjacency list graph.
+    /// Class containing methods to test a graph.
     /// </summary>
-    public class AdjacencyListGraphTest
+    public class GraphTest
     {
-        private AdjacencyListGraph<Vertex<string>> graph;
+        private Graph<Vertex<string>> graph;
         private List<Vertex<string>> vertices = new List<Vertex<string>>();
-        private bool isDirected = false;
+        private bool isDirected;
 
-        public AdjacencyListGraphTest(bool isDirected)
+        public GraphTest(bool isDirected)
         {
             this.isDirected = isDirected;
-            graph = new AdjacencyListGraph<Vertex<string>>(isDirected);
+            graph = new Graph<Vertex<string>>(isDirected);
 
             vertices.Add(new Vertex<string>("MIA")); //0
             vertices.Add(new Vertex<string>("JFK")); //1
@@ -70,7 +70,7 @@ namespace Graph_ADT.test
             graph.removeEdgeAndEndpoints(edge);
             graph.printEdges();
         }
-        
+
         public void runTest()
         {
             populateGraph();
