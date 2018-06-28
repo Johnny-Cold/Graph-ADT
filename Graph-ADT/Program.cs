@@ -11,15 +11,20 @@ namespace Graph_ADT
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine("****************** GRAPH TEST ******************\n\n");
-            //GraphTest graphTest = new GraphTest(true);
-            //graphTest.runTest();
+            Console.WriteLine("****************** GRAPH TEST ******************\n\n");
+            GraphTest graphTest = new GraphTest(true);
+            graphTest.runTest();
+            Console.ReadLine();
+
+            //Console.WriteLine("****************** ADJACENCY LIST GRAPH TEST ******************\n\n");
+            //AdjacencyListGraphTest listTest = new AdjacencyListGraphTest(false);
+            //listTest.runTest();
             //Console.ReadLine();
 
-            Console.WriteLine("****************** ADJACENCY LIST GRAPH TEST ******************\n\n");
-            AdjacencyListGraphTest listTest = new AdjacencyListGraphTest(false);
-            listTest.runTest();
-            Console.ReadLine();
+            //Console.WriteLine("****************** ADJACENCY MAP GRAPH TEST ******************\n\n");
+            //AdjacencyMapGraphTest mapTest = new AdjacencyMapGraphTest(true);
+            //mapTest.runTest();
+            //Console.ReadLine();
         }
     }
 }

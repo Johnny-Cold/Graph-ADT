@@ -15,6 +15,7 @@ namespace Graph_ADT.map
         private List<KeyValuePair<K, V>>[] table;
         private float loadFactor = 10.0f;
         private int minimumSize = 1024;
+        private int initialListSize = 10;
 
         public SeparateChainingHashMap() : base()
         {
@@ -42,10 +43,15 @@ namespace Graph_ADT.map
 
             for(int k = 0; k < table.Length; k++)
             {
-                table[k] = new List<KeyValuePair<K, V>>(10);
+                table[k] = new List<KeyValuePair<K, V>>(initialListSize);
             }
                 
             numEntries = 0;
+        }
+
+        public int indexOf(int hash)
+        {
+            return hash & (table.Length - 1);
         }
 
         public override V get(K key)
