@@ -52,8 +52,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="map\SeparateChainingHashMap.cs" />
     <Compile Include="mod\Vertex.cs" />
-    <Compile Include="search\uninformed\BreadthFirstSearch.cs" />
-    <Compile Include="search\uninformed\DepthFirstSearch.cs" />
+    <Compile Include="search\BreadthFirstSearch.cs" />
+    <Compile Include="search\DepthFirstSearch.cs" />
     <Compile Include="test\AdjacencyListGraphTest.cs" />
     <Compile Include="test\AdjacencyMapGraphTest.cs" />
     <Compile Include="test\GraphTest.cs" />
@@ -61,9 +61,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="search\informed\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Graph_ADT.search.uninformed
+namespace Graph_ADT.search
 {
     public class DepthFirstSearch<T>
     {
