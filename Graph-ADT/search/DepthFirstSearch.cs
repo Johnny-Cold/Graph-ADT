@@ -11,10 +11,8 @@ namespace Graph_ADT.search
 {
     public class DepthFirstSearch<T>
     {
-        public static Vertex<T> search(Graph<Vertex<T>> graph, Vertex<T> startPoint, HashSet<Vertex<T>> visited, HashMap<Vertex<T>, Edge<Vertex<T>>> forest)
+        public static HashMap<Vertex<T>, Edge<Vertex<T>>> search(Graph<Vertex<T>> graph, Vertex<T> startPoint, HashSet<Vertex<T>> visited, HashMap<Vertex<T>, Edge<Vertex<T>>> forest)
         {
-            Vertex<T> vertex = null;
-
             visited.Add(startPoint);
 
             foreach(Edge<Vertex<T>> edge in graph.getEdges())
@@ -28,7 +26,7 @@ namespace Graph_ADT.search
                 }
             }
 
-            return vertex;
+            return forest;
         }
     }
 }
