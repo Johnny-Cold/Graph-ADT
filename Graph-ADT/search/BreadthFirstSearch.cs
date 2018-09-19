@@ -16,11 +16,11 @@ namespace Graph_ADT.search
     /// <typeparam name="T"> Type name for vertex entries. </typeparam>
     public class BreadthFirstSearch<T>
     {
-        public static void search(Graph<Vertex<T>> graph, Vertex<T> node, HashSet<Vertex<T>> known, HashMap<Vertex<T>, Edge<Vertex<T>>> forest)
+        public static void search(Graph<Vertex<T>> graph, Vertex<T> startNode, HashSet<Vertex<T>> known, HashMap<Vertex<T>, Edge<Vertex<T>>> forest)
         {
             LinkedList<Vertex<T>> level = new LinkedList<Vertex<T>>(); // List of vertices in the current graph level.
-            known.Add(node); // We add the start point to the set of known nodes.
-            level.AddLast(node); // The first level includes only the node "node".
+            known.Add(startNode); // We add the start point to the set of known nodes.
+            level.AddLast(startNode); // The first level includes only the source node.
 
             while(level.Count > 0)
             {
@@ -50,9 +50,9 @@ namespace Graph_ADT.search
                             }
                         }
                     }
-
-                    level = nextLevel; // Proceeding to next level in graph.
                 }
+                
+                level = nextLevel; // Proceeding to next level in graph.
             }
         }
     }
