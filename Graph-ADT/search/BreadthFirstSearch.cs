@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 
 namespace Graph_ADT.search
 {
+    /// <summary>
+    /// Given a graph G = (V,E) and a distinguished source vertex s, breadth-first search systematically explores the 
+    /// edges of G to “discover” every vertex that is reachable from s.
+    /// </summary>
+    /// <typeparam name="T"> Type name for vertex entries. </typeparam>
     public class BreadthFirstSearch<T>
     {
         public static void search(Graph<Vertex<T>> graph, Vertex<T> node, HashSet<Vertex<T>> known, HashMap<Vertex<T>, Edge<Vertex<T>>> forest)
