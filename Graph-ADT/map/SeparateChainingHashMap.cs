@@ -34,18 +34,18 @@ namespace Graph_ADT.map
 
         protected override void createTable()
         {
-            table = new List<KeyValuePair<K,V>>[capacity];
+            table = new List<KeyValuePair<K, V>>[capacity];
         }
 
         private void initialiseMap(int length)
         {
             table = new List<KeyValuePair<K, V>>[length];
 
-            for(int k = 0; k < table.Length; k++)
+            for (int k = 0; k < table.Length; k++)
             {
                 table[k] = new List<KeyValuePair<K, V>>(initialListSize);
             }
-                
+
             numEntries = 0;
         }
 
@@ -59,10 +59,10 @@ namespace Graph_ADT.map
             V value = default(V);
             int hash = hashCode(key);
             List<KeyValuePair<K, V>> bucket = table[hash];
-         
-            foreach(KeyValuePair<K,V> entry in bucket)
+
+            foreach (KeyValuePair<K, V> entry in bucket)
             {
-                if(entry.Key.Equals(key))
+                if (entry.Key.Equals(key))
                 {
                     value = entry.Value;
                 }
@@ -80,14 +80,14 @@ namespace Graph_ADT.map
         {
             int hash = hashCode(pair.Key);
             bool alreadyExist = false; // Determines whther or not the given key-value pair already is in the table.
-            V value = pair.Value;
+            V value = default(V);
             List<KeyValuePair<K, V>> bucket = table[hash];
-            
-            foreach(KeyValuePair<K,V> entry in bucket)
+
+            foreach (KeyValuePair<K, V> entry in bucket)
             {
                 // Ensures no duplicates are created.
                 // Enters new value to existing key if the provided key-value key already exists.
-                if(entry.Key.Equals(pair.Key))
+                if (entry.Key.Equals(pair.Key))
                 {
                     value = entry.Value;
                     bucket.Remove(entry);
@@ -97,13 +97,14 @@ namespace Graph_ADT.map
                 }
             }
 
-            if(!alreadyExist)
+            if (!alreadyExist)
             {
                 bucket.Add(pair);
+                keySet.Add(pair.Key);
                 numEntries++;
             }
 
-           
+
             int maxSize = (int)(loadFactor * table.Length);
 
             // If the number of entires is greater than the threshold, we increase the hash map's capacity.
@@ -111,7 +112,7 @@ namespace Graph_ADT.map
             {
                 increaseCapacity();
             }
-            
+
             return value;
         }
 
@@ -121,24 +122,25 @@ namespace Graph_ADT.map
             int hash = hashCode(key);
             List<KeyValuePair<K, V>> bucket = table[hash];
 
-            foreach(KeyValuePair<K,V> entry in bucket)
+            foreach (KeyValuePair<K, V> entry in bucket)
             {
-                if(entry.Key.Equals(key))
+                if (entry.Key.Equals(key))
                 {
                     removedValue = entry.Value;
                     bucket.Remove(entry);
+                    keySet.Remove(key);
                     numEntries--;
 
                     int hereLoadFactored = (int)(numEntries / loadFactor);
                     int smallerSize = getSmallerSize(table.Length);
 
-                    if((hereLoadFactored < smallerSize) && (smallerSize > minimumSize))
+                    if ((hereLoadFactored < smallerSize) && (smallerSize > minimumSize))
                     {
                         reduceCapacity();
                     }
                 }
             }
-            
+
             return removedValue;
         }
 
@@ -163,15 +165,15 @@ namespace Graph_ADT.map
             initialiseMap(size);
 
             // Re-hash old data.
-            foreach(List<KeyValuePair<K,V>> list in temp)
+            foreach (List<KeyValuePair<K, V>> list in temp)
             {
-                foreach(KeyValuePair<K,V> entry in list)
+                foreach (KeyValuePair<K, V> entry in list)
                 {
                     put(entry);
                 }
             }
         }
-        
+
         private void reduceCapacity()
         {
             List<KeyValuePair<K, V>>[] temp = table;
@@ -180,18 +182,18 @@ namespace Graph_ADT.map
             int length = getSmallerSize(table.Length);
             initialiseMap(length);
 
-            foreach(List<KeyValuePair<K,V>> list in temp)
+            foreach (List<KeyValuePair<K, V>> list in temp)
             {
-                foreach(KeyValuePair<K,V> entry in list)
+                foreach (KeyValuePair<K, V> entry in list)
                 {
                     put(entry);
                 }
             }
         }
-        
+
         public override void clear()
         {
-            for(int k = 0; k < table.Length; k++)
+            for (int k = 0; k < table.Length; k++)
             {
                 table[k].Clear();
                 numEntries--;

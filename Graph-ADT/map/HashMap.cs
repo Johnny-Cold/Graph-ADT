@@ -12,7 +12,7 @@ namespace Graph_ADT.map
         protected int numEntries;
         private int primeFactor;
         private long shift, scale; // The shift and scaling factors.
-        private List<K> keySet;
+        protected List<K> keySet = new List<K>();
 
         /// <summary>
         /// Class constructor.
